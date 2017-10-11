@@ -1,16 +1,17 @@
+/* eslint-disable no-underscore-dangle */ // for this._cookieName
 /**
  * Module dependencies.
  */
-var passport = require("passport-strategy");
-var diva = require("diva-irma-js");
-var util = require("util");
+const passport = require('passport-strategy');
+const diva = require('diva-irma-js');
+const util = require('util');
 
 /**
  * Creates an instance of `DivaCookieStrategy`.
  *
  * Options:
  *
- *   - `cookieName`  Cookie name (defaults to "diva-session")
+ *   - `cookieName`  Cookie name (defaults to 'diva-session')
  *
  * Examples:
  *
@@ -22,10 +23,10 @@ var util = require("util");
  * @api public
  */
 function DivaCookieStrategy(options) {
-  options = options || {};
+  options = options || {}; // eslint-disable-line no-param-reassign
   passport.Strategy.call(this);
-  this.name = "diva";
-  this._cookieName = options.cookieName || "diva-session";
+  this.name = 'diva';
+  this._cookieName = options.cookieName || 'diva-session';
 }
 
 /**
@@ -39,13 +40,13 @@ util.inherits(DivaCookieStrategy, passport.Strategy);
  * @param {Object} req
  * @api protected
  */
-DivaCookieStrategy.prototype.authenticate = function(req) {
+DivaCookieStrategy.prototype.authenticate = (req) => {
   // if (!req.cookies) {
-  //   throw new TypeError("Maybe you forgot to use cookie-parser?");
+  //   throw new TypeError('Maybe you forgot to use cookie-parser?');
   // }
 
   if (!req.signedCookies) {
-    throw new TypeError("Maybe you forgot to use cookie-encrypter?");
+    throw new TypeError('Maybe you forgot to use cookie-encrypter?');
   }
 
   // TODO move this to diva-irma-js except for the cookie part
@@ -60,11 +61,10 @@ DivaCookieStrategy.prototype.authenticate = function(req) {
   }
 
   if (!sessionState) {
-    return this.fail(401); //TODO this should be unreachable code
-  } else {
-    req.divaSessionState = sessionState;
-    return this.success(sessionState.user);
+    return this.fail(401); // TODO this should be unreachable code
   }
+  req.divaSessionState = sessionState;
+  return this.success(sessionState.user);
 };
 
 /**
@@ -72,4 +72,5 @@ DivaCookieStrategy.prototype.authenticate = function(req) {
  */
 module.exports = DivaCookieStrategy;
 
-const defaultSessionIdGenerator = () => Math.rand();
+// TODO
+const defaultSessionIdGenerator = () => Math.rand(); // eslint-disable-line no-unused-vars

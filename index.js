@@ -1,12 +1,12 @@
 /**
  * Module dependencies.
  */
-const DivaCookieStrategy = require("./diva-cookie-strategy");
+const DivaCookieStrategy = require('./diva-cookie-strategy');
 
 /**
  * Expose `DivaCookieStrategy` directly from package.
  */
-exports = module.exports = DivaCookieStrategy;
+module.exports = DivaCookieStrategy;
 
 /**
  * Export constructors

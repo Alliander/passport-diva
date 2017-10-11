@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A passport strategy for authenticating using cookies containing DIVA/IRMA session state.",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint -c .eslintrc .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -28,7 +29,15 @@
     "Alliander N.V. (https://alliander.com/)"
   ],
   "license": "BSD-3-Clause",
+  "devDependencies": {
+    "eslint": "4.8.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.4.0"
+  },
   "dependencies": {
+    "diva-irma-js": "git+https://github.com/Alliander/diva-irma-js.git",
     "passport": "^0.4.0",
     "passport-strategy": "1.0.0",
     "uuid": "^3.1.0"
