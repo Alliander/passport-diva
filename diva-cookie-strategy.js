@@ -2,8 +2,8 @@
  * Module dependencies.
  */
 var passport = require("passport-strategy");
+var diva = require("diva-irma-js");
 var util = require("util");
-const uuidv4 = require('uuid/v4');
 
 /**
  * Creates an instance of `DivaCookieStrategy`.
@@ -26,7 +26,6 @@ function DivaCookieStrategy(options) {
   passport.Strategy.call(this);
   this.name = "diva";
   this._cookieName = options.cookieName || "diva-session";
-  this._generateSessionId = options.generateSessionId || uuidv4;
 }
 
 /**
@@ -49,17 +48,13 @@ DivaCookieStrategy.prototype.authenticate = function(req) {
     throw new TypeError("Maybe you forgot to use cookie-encrypter?");
   }
 
+  // TODO move this to diva-irma-js except for the cookie part
   let sessionState;
   if (typeof req.signedCookies[this._cookieName] === 'undefined' ||
       typeof req.signedCookies[this._cookieName].user === 'undefined' ||
       typeof req.signedCookies[this._cookieName].user.sessionId === 'undefined' ||
       typeof req.signedCookies[this._cookieName].user.attributes === 'undefined') {
-    sessionState = {
-      user: {
-        sessionId: this._generateSessionId(),
-        attributes: [],
-      },
-    };
+    sessionState = diva.deauthenticate();
   } else {
     sessionState = req.signedCookies[this._cookieName];
   }
@@ -67,7 +62,6 @@ DivaCookieStrategy.prototype.authenticate = function(req) {
   if (!sessionState) {
     return this.fail(401); //TODO this should be unreachable code
   } else {
-    console.log("passport-diva", sessionState);
     req.divaSessionState = sessionState;
     return this.success(sessionState.user);
   }
