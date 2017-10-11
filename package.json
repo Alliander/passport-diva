@@ -19,7 +19,7 @@
   "files": [
     "README.md",
     "index.js",
-    "diva-strategy.js",
+    "diva-cookie-strategy.js",
     "LICENSE"
   ],
   "contributors": [
