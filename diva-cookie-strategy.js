@@ -40,7 +40,7 @@ util.inherits(DivaCookieStrategy, passport.Strategy);
  * @param {Object} req
  * @api protected
  */
-DivaCookieStrategy.prototype.authenticate = (req) => {
+DivaCookieStrategy.prototype.authenticate = function authenticate(req) {
   // if (!req.cookies) {
   //   throw new TypeError('Maybe you forgot to use cookie-parser?');
   // }
